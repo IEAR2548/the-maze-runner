@@ -2,7 +2,7 @@
 "# the-maze-runner" 
 
 "# run"
-mvn clean favafx:run
+mvn clean javafx:run
 
 "# unit test"
 mvn clean test
