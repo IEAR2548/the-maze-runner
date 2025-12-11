@@ -29,7 +29,6 @@ public class GeneticSolver implements ISolver {
         List<Chromosome> currentPopulation = initializePopulation();
         evaluatePopulation(currentPopulation, maze);        
         Chromosome bestChromosome = currentPopulation.get(0);
-
         for (int generation = 0; generation < MAX_GENERATIONS; generation++) {
             List<Chromosome> nextPopulation = new ArrayList<>();           
             for (int i = 0; i < ELITISM_COUNT; i++) {
@@ -44,8 +43,7 @@ public class GeneticSolver implements ISolver {
             }
             
             currentPopulation = nextPopulation;
-            evaluatePopulation(currentPopulation, maze);
-            
+            evaluatePopulation(currentPopulation, maze);          
             Chromosome generationBest = currentPopulation.get(0);
             if (generationBest.getFitness() > bestChromosome.getFitness()) {
                 bestChromosome = generationBest;
@@ -55,8 +53,7 @@ public class GeneticSolver implements ISolver {
             }
         }
         
-        long endTime = System.currentTimeMillis();
-        
+        long endTime = System.currentTimeMillis();     
         if (bestChromosome.isGoalReached()) {
             return new PathResult(
                 bestChromosome.getPath(), 
@@ -65,13 +62,6 @@ public class GeneticSolver implements ISolver {
                 endTime - startTime
             );
         } else {
-            // If the best chromosome did not reach the goal, we return the closest path found
-            if (bestChromosome.getPath() != null && !bestChromosome.getPath().isEmpty()) {
-                 // Return the path that got closest with the lowest cost, even if it didn't hit G
-                 // Note: The totalCost here includes the penalty for not reaching G, which is higher than the actual cost.
-                 // We will return the actual cost of the path found, but mark it as failure (high Integer.MAX_VALUE)
-                 // to differentiate from optimal classical solutions.
-            }
             return createFailureResult(NAME, startTime, endTime);
         }
     }

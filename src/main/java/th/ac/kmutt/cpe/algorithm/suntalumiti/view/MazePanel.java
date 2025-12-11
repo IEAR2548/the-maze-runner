@@ -12,23 +12,18 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * A custom JavaFX component (Canvas) to draw and visualize the Maze and Path.
- */
 public class MazePanel extends Canvas {
     private Maze maze;
     private PathResult result = new PathResult(Collections.emptyList(), 0, "None", 0);
     private final double CELL_SIZE = 30.0;
     
     public MazePanel() {
-        // Set initial size
         setWidth(500);
         setHeight(500);
     }
 
     public void setMaze(Maze maze) {
         this.maze = maze;
-        // Adjust canvas size based on maze dimensions
         if (maze != null) {
             setWidth(maze.getCols() * CELL_SIZE);
             setHeight(maze.getRows() * CELL_SIZE);
@@ -58,37 +53,33 @@ public class MazePanel extends Canvas {
                 double x = c * CELL_SIZE;
                 double y = r * CELL_SIZE;
 
-                // 1. Draw Cell Background (Default: White)
                 gc.setFill(Color.WHITE);
                 if (cell.isWall()) {
-                    gc.setFill(Color.BLACK); // Wall
+                    gc.setFill(Color.BLACK);
                 } else if (pathCells.contains(cell)) {
-                    gc.setFill(Color.LIGHTGREEN); // Path Highlight
+                    gc.setFill(Color.LIGHTGREEN);
                 }
                 gc.fillRect(x, y, CELL_SIZE, CELL_SIZE);
 
-                // 2. Draw Cell Border
                 gc.setStroke(Color.GRAY);
                 gc.setLineWidth(1);
                 gc.strokeRect(x, y, CELL_SIZE, CELL_SIZE);
 
-                // 3. Draw Text/Symbols
                 gc.setFill(Color.BLACK);
                 gc.setFont(Font.font("Monospaced", CELL_SIZE * 0.4));
                 String text = "";
                 
                 if (cell.isStart()) {
                     text = "S";
-                    gc.setFill(Color.DARKGREEN); // Start Cell Color
+                    gc.setFill(Color.DARKGREEN);
                 } else if (cell.isGoal()) {
                     text = "G";
-                    gc.setFill(Color.RED); // Goal Cell Color
+                    gc.setFill(Color.RED);
                 } else if (!cell.isWall() && cell.getTimeCost() > 0) {
                     text = String.valueOf(cell.getTimeCost());
-                    gc.setFill(Color.DARKBLUE); // Cost Text Color
+                    gc.setFill(Color.DARKBLUE);
                 }
 
-                // Center the text
                 double textWidth = text.length() * CELL_SIZE * 0.2; 
                 gc.fillText(text, x + (CELL_SIZE - textWidth) / 2, y + CELL_SIZE / 2 + 5);
             }

@@ -1,16 +1,12 @@
-/* กำหนดฟอนต์หลักสำหรับแอปพลิเคชัน */
 .root {
-    /* เปลี่ยน 'Tahoma' เป็นชื่อฟอนต์ที่คุณต้องการ เช่น 'Cloud', 'Sukhumvit' */
     -fx-font-family: "Tahoma", "Arial", "Helvetica", sans-serif;
-    -fx-font-size: 14px; /* ขนาดฟอนต์พื้นฐาน */
+    -fx-font-size: 14px;
 }
 
-/* ปรับฟอนต์สำหรับ Label/Text ทั่วไป (ใช้ฟอนต์เดียวกัน) */
 .label, .button, .combo-box {
     -fx-font-family: "Tahoma", "Arial", sans-serif;
 }
 
-/* เพิ่มการเน้นฟอนต์ที่ Label ผลลัพธ์ */
 #result-label {
     -fx-font-family: "Tahoma", "Arial", sans-serif;
     -fx-font-size: 16px;
@@ -18,8 +14,6 @@
     -fx-padding: 10px;
 }
 
-/* กำหนดฟอนต์ปุ่ม */
 .button {
-    /* -fx-font-weight: bold; */
     -fx-font-size: 14px;
 }

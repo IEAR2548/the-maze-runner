@@ -2,14 +2,10 @@ package th.ac.kmutt.cpe.algorithm.suntalumiti.algo.classical;
 
 import th.ac.kmutt.cpe.algorithm.suntalumiti.model.Cell;
 
-/**
- * Node structure used for Dijkstra's Algorithm.
- * Implements Comparable for PriorityQueue ordering based on distance (gCost).
- */
 public class DijkstraNode implements Comparable<DijkstraNode> {
     public final Cell cell;
     public final DijkstraNode parent;
-    public final int distance; // Accumulated time cost from start
+    public final int distance;
 
     public DijkstraNode(Cell cell, DijkstraNode parent, int distance) {
         this.cell = cell;
@@ -19,7 +15,6 @@ public class DijkstraNode implements Comparable<DijkstraNode> {
 
     @Override
     public int compareTo(DijkstraNode other) {
-        // จัดเรียงใน PriorityQueue: โหนดที่มี distance (cost) น้อยที่สุดจะถูกเลือกก่อน
         return Integer.compare(this.distance, other.distance);
     }
 

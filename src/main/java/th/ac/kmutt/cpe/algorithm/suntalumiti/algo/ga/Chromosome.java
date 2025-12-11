@@ -17,7 +17,7 @@ public class Chromosome implements Comparable<Chromosome> {
     private static final Random RANDOM = new Random();
     
     private static final int MAX_PATH_LENGTH = 1000; 
-    private static final int COLLISION_PENALTY = 100;
+    // private static final int COLLISION_PENALTY = 100;
     private static final int WALL_HIT_FIXED_PENALTY = 5000;
 
     public Chromosome(int geneLength) {
@@ -37,12 +37,10 @@ public class Chromosome implements Comparable<Chromosome> {
         this.isGoalReached = false;
         this.path = new ArrayList<>();
         path.add(currentCell);
-
         for (int i = 0; i < genes.size(); i++) {
             Gene move = genes.get(i);
             int nextR = currentCell.getRow() + move.getDr();
             int nextC = currentCell.getCol() + move.getDc();
-
             if (!maze.isValid(nextR, nextC)) {
                 this.totalCost += WALL_HIT_FIXED_PENALTY;
                 break; 
@@ -52,41 +50,34 @@ public class Chromosome implements Comparable<Chromosome> {
             this.totalCost += nextCell.getTimeCost();
             this.path.add(nextCell);
             currentCell = nextCell;
-
             if (currentCell.isGoal()) {
                 this.isGoalReached = true;
                 break; 
-            }
-            
+            }           
             if (path.size() >= MAX_PATH_LENGTH) {
                 this.totalCost += 10000; 
                 break;
             }
-        }
-        
+        }    
         if (!isGoalReached) {
             int distance = Math.abs(currentCell.getRow() - maze.getGoalCell().getRow()) + 
                            Math.abs(currentCell.getCol() - maze.getGoalCell().getCol());
             this.totalCost += distance * 50; 
         }
-
         this.fitness = 1.0 / (this.totalCost + 1e-6); 
     }
 
     public Chromosome crossover(Chromosome other) {
         int crossoverPoint = RANDOM.nextInt(genes.size());
-        List<Gene> newGenes = new ArrayList<>();
-        
+        List<Gene> newGenes = new ArrayList<>();      
         for (int i = 0; i < crossoverPoint; i++) {
             newGenes.add(this.genes.get(i));
-        }
-        
+        }     
         for (int i = crossoverPoint; i < other.genes.size(); i++) {
             if(newGenes.size() < genes.size()) {
                  newGenes.add(other.genes.get(i));
             }
-        }
-        
+        }     
         return new Chromosome(newGenes);
     }
 
@@ -98,11 +89,25 @@ public class Chromosome implements Comparable<Chromosome> {
         }
     }
 
-    public double getFitness() { return fitness; }
-    public int getTotalCost() { return totalCost; }
-    public List<Cell> getPath() { return path; }
-    public boolean isGoalReached() { return isGoalReached; }
-    public List<Gene> getGenes() { return genes; }
+    public double getFitness() { 
+        return fitness; 
+    }
+
+    public int getTotalCost() { 
+        return totalCost; 
+    }
+
+    public List<Cell> getPath() { 
+        return path; 
+    }
+
+    public boolean isGoalReached() { 
+        return isGoalReached; 
+    }
+    
+    public List<Gene> getGenes() { 
+        return genes; 
+    }
 
     @Override
     public int compareTo(Chromosome other) {
